@@ -1,0 +1,37 @@
+<!--pages/books/books.wxml-->
+<text>pages/books/books.wxml</text>
+<import src="/wxSearch/wxSearch.wxml"/>
+
+<view class="wxSearch-section">
+  <view class="wxSearch-pancel">
+    <input bindinput="wxSearchInput" bindfocus="wxSerchFocus" value="{{wxSearchData.value}}" bindblur="wxSearchBlur" class="wxSearch-input" placeholder="" />
+    <button class="wxSearch-button" bindtap="wxSearchFn" size="mini" plain="true">搜索</button>
+  </view>
+</view>
+
+<view>
+  <scroll-view>
+    <block wx:for="{{bookInfos}}">
+    <block wx:if="{{item.findCode}}">
+      <view class="flex pl-xs pr-xs flex-direction text-center" data-bookinfo="{{item}}" bindtap='tapBook'>
+        <view class='doc-box m-xs shadow'>
+          <view class='flex'>
+            <view class='flex-sub doc-box m-xs'>
+              <image src='{{item.douban.images.small}}' class='radius mr-df'></image>
+            </view>
+            <view class='flex-twice book-info p-sm m-xs'>
+              <view class="flex pl-sm pt-xl pb-xl flex-direction text-left">
+                <view class='text-truncate'>书名: {{item.title}}</view>
+                <view class='text-truncate'>索书号: {{item.findCode}}</view>
+                <view class='text-truncate'>作者: {{item.author}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+    </block>
+  </scroll-view>
+</view>
+
+<template is="wxSearch" data="{{wxSearchData}}"/>

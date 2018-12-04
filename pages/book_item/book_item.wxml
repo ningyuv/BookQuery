@@ -1,0 +1,79 @@
+<!--pages/book_item/book_item.wxml-->
+<text>pages/book_item/book_item.wxml</text>
+<view>
+  <scroll-view>
+    <view class="flex pl-xs pr-xs flex-direction text-center">
+      <view class='doc-box m-xs shadow'>
+      
+        <view class="bar solid-bottom">
+          <view class='ml-sm'>
+            <text class='iconfont icon-titles success-text'></text>
+            <text class='text-lg ml-xs'>简述</text>
+          </view>
+        </view>
+        <view class='doc-main'>
+          <view class='flex doc-box'>
+            <view class='flex-sub'>
+              <image src='{{bookInfo.douban.images.medium}}' mode='widthFix' class='radius mr-df'></image>
+            </view>
+          </view>
+          <view class='doc-box'>
+            <view class='flex-twice book-info p-sm m-xs'>
+              <view class="flex pl-sm pt-lg pb-lg flex-direction text-left">
+                <view class='text-truncate'>书名: {{bookInfo.title}}</view>
+                <view class='text-truncate'>ISBN: {{bookInfo.isbn}}</view>
+                <view class='text-truncate'>作者: {{bookInfo.author}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class=''>
+          <view class="bar solid-bottom mt-sm">
+            <view class='ml-sm'>
+              <text class='iconfont icon-titles success-text'></text>
+              <text class='text-lg ml-xs'>馆藏信息</text>
+            </view>
+          </view>
+          <view class="doc-main">
+          <scroll-view scroll-x>
+        <view class="flex doc-box flex-wrap" style='width: 160%;background: #BEE7E9;'>
+          <view class='basis-xs'>索书号</view>
+          <view class='basis-xs'>条码号</view>
+          <view class='basis-sm'>馆藏地</view>
+          <view class='basis-xs'>书刊状态</view>
+        </view>
+        <block wx:for="{{bookInfo.lentInfo}}">
+        <view class="flex doc-box flex-wrap align-center" style='width: 160%;'>
+          <view class='basis-xs'>{{item.findCode}}</view>
+          <view class='basis-xs'>{{item.barCode}}</view>
+          <view class='basis-sm'>{{item.location}}</view>
+          <block wx:if="{{item.status[1]}}">
+            <view class='basis-xs'>{{item.status[1]}}应还</view>
+          </block>
+          <block wx:else>
+            <view class='basis-xs'>可借</view>
+          </block>
+        </view>
+        </block>
+        </scroll-view>
+          </view>
+        </view>
+
+        <view class=''>
+          <view class="bar solid-bottom mt-sm">
+            <view class='ml-sm'>
+              <text class='iconfont icon-titles success-text'></text>
+              <text class='text-lg ml-xs'>简介</text>
+            </view>
+          </view>
+          <view class="doc-main">
+            <view class="flex doc-box p-df flex-direction text-left">
+              <text>{{bookInfo.douban.summary}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
