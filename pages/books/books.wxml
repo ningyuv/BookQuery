@@ -44,7 +44,7 @@
 <view>
   <scroll-view>
     <block wx:for="{{bookInfos}}">
-    <block wx:if="{{item.findCode}}">
+    <block wx:if="{{item.findCode&&item.isbn}}">
       <view class="flex pl-xs pr-xs flex-direction text-center animation-slide-bottom" data-bookinfo="{{item}}" bindtap='tapBook' style='animation-delay: {{(index+1)*0.1}}s;'>
         <view class='doc-box-mine m-xs shadow'>
           <view class='flex'>
