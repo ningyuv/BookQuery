@@ -1,4 +1,5 @@
 /**index.wxss**/
+@import "/wxSearch/wxSearch.wxss";
 .userinfo {
   display: flex;
   flex-direction: column;

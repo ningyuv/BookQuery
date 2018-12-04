@@ -1,9 +1,8 @@
 {
   "pages": [
-    "pages/books/books",
-    "pages/search/search",
-    "pages/book_item/book_item",
     "pages/index/index",
+    "pages/books/books",
+    "pages/book_item/book_item",
     "pages/logs/logs"
   ],
   "window": {
@@ -11,5 +10,8 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
+  },
+  "networkTimeout": {
+    "request": 3000
   }
 }

@@ -1,0 +1,39 @@
+<svg width="500px" height="500px" viewBox="0 0 500 500" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+
+        <linearGradient x1="50%" y1="100%" x2="50%" y2="0%" id="linearGradient-2">
+
+            <stop offset="0%" stop-color="#561186">
+                <animate attributeName="stop-color" values="#561186; #7A5FFF; #23D2D9; #DF23EA; #561186" dur="8s" begin="3.2s" repeatCount="indefinite"></animate>
+            </stop>
+
+            <stop offset="100%" stop-color="#CC057E">
+                <animate attributeName="stop-color" values="#CC057E; #01FF89; #FFFFFF; #5F72BD; #CC057E" dur="8s" begin="3.2s" repeatCount="indefinite"></animate>
+            </stop>
+
+        </linearGradient>
+
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(0.000000, -0.000000)">
+
+            <!--<path style="visibility:visible;" d="M302,593 C440.071187,593 551,481.071187 551,343 C551,204.928813 440.071187,93 302,93 C163.928813,93 52,205.928813 52,344 C52,482.071187 163.928813,593 302,593 Z" id="Oval" fill="url(#linearGradient-2)"></path>-->
+
+            <path d="M250,500 C388.071187,500 499,388.071187 499,250 C499,111.928813 388.071187,0 250,0 C111.928813,0 0,112.928813 0,251 C0,389.071187 111.928813,500 250,500 Z" id="Oval" fill="url(#linearGradient-2)"></path>
+
+
+
+
+
+
+            <!--<path style="visibility:hidden;" d="M380,517 C518.071187,517 551,481.071187 551,343 C551,204.928813 433.071187,131 295,131 C156.928813,131 8,240.928813 8,379 C8,517.071187 241.928813,517 380,517 Z" id="Oval2" ></path>-->
+
+            <!--<path style="visibility:hidden;" d="M290,490 C428.071187,490 548,386 469,267 C390,148 381.071187,38 243,38 C104.928813,38 113,110 52,201 C-9,292 151.928813,490 290,490 Z" id="Oval2"></path>-->
+
+            <path style="visibility:hidden;" d="M232.574956,500 C376.574956,526 481.574956,388.071187 481.574956,250 C481.574956,111.928813 370.646143,0 232.574956,0 C94.5037691,0 26,83 13.5749561,228 C1.14991216,373 88.5749561,474 232.574956,500 Z" id="Oval2"></path>
+        </g>
+    </g>
+</svg>

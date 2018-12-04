@@ -75,7 +75,10 @@ function doubanBook(isbn, fn){
     success: function(res) {
       fn(res)
     },
-    fail: function(res) {},
+    fail: function(res) {
+      fn(null)
+      console.log(res)
+    },
     complete: function(res) {},
   })
 }

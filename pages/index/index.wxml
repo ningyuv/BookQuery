@@ -1,13 +1,19 @@
 <!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+<view class="doc-main" style='margin-top: 100rpx;'>
+  <view class='text-center'>
+    <image src='../../images/animateCircle.svg' mode='widthFix' class='round' style='width: 300rpx;box-shadow: -4rpx 4rpx 6rpx 0rpx rgb(172, 172, 172);'></image>
+    <view class='text-xxl'>馆藏图书查询</view>
   </view>
 </view>
+
+<import src="/wxSearch/wxSearch.wxml"/>
+<view class="bar p-xl animation-slide-bottom" style='margin-top:100rpx;animation-delay: 0.2s;'>
+  <view class='ml-sm'></view>
+  <view class='serach-round'>
+    <text class="iconfont icon-search"></text>
+    <input bindconfirm="wxSearchFn" bindinput="wxSearchInput" bindfocus="wxSerchFocus" value="{{wxSearchData.value}}" bindblur="wxSearchBlur" placeholder="搜索书籍"></input>
+  </view>
+  <view class='mh-sm text-sm' bindtap='wxSearchFn'>搜索
+  </view>
+</view>
+<!-- <template is="wxSearch" data="{{wxSearchData}}"/> -->

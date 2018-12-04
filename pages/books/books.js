@@ -8,7 +8,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    bookInfos: null
+    bookInfos: [],
+    loading: false
 
   },
 
@@ -20,9 +21,62 @@ Page({
     console.log('onLoad')
     var that = this
     //初始化的时候渲染wxSearchdata
-    WxSearch.init(that, 43, ['weappdev', '小程序', 'wxParse', 'wxSearch', 'wxNotification']);
-    WxSearch.initMindKeys(['weappdev.com', '微信小程序开发', '微信开发', '微信小程序']);
+    WxSearch.init(that, 45, []);
+    WxSearch.initMindKeys([]);
 
+    WxSearch.wxSearchAddHisKey(that);
+    console.log(options.title)
+    if(options.title == "undefined"){
+      options.title = ''
+      console.log(options.title)
+    }
+    const api = require('../../utils/api.js')
+    const parser = require('../../utils/parser.js')
+    this.setData({
+      loading: true,
+      bookInfos: [],
+      ['wxSearchData.value']: options.title
+    })
+    api.simpleSearch(options.title, res => {
+      var bookInfos = res.data
+      console.log(bookInfos)
+      that.setData({
+        bookInfos: bookInfos,
+        loading: false
+      })
+      for (var i in bookInfos) {
+        const j = i
+        api.detailPage(bookInfos[i].marc_no, res => {
+          bookInfos[j].isbn = res.data
+          if (bookInfos[j].isbn) {
+            that.setData({
+              ['bookInfos[' + j + '].isbn']: bookInfos[j].isbn
+            })
+            api.doubanBook(bookInfos[j].isbn, res => {
+              if (res && res.data) {
+                bookInfos[j].douban = res.data
+                if (!bookInfos[j].douban.summary) {
+                  bookInfos[j].douban.summary = '暂无简介'
+                }
+              }
+              else {
+                bookInfos[j].douban = {
+                  "images": {
+                    "small": "../../images/book-default-lpic.gif",
+                    "large": "../../images/book-default-lpic.gif",
+                    "medium": "../../images/book-default-lpic.gif"
+                  },
+                  "summary": "暂无简介"
+                }
+              }
+              that.setData({
+                ['bookInfos[' + j + '].douban']: bookInfos[j].douban
+              })
+            })
+          }
+        })
+      }
+    })
 
 
   },
@@ -88,14 +142,18 @@ Page({
     var that = this
     WxSearch.wxSearchAddHisKey(that);
     console.log(this.data.wxSearchData)
-    var that = this
     const api = require('../../utils/api.js')
     const parser = require('../../utils/parser.js')
+    this.setData({
+      loading: true,
+      bookInfos: []
+    })
     api.simpleSearch(this.data.wxSearchData.value, res => {
       var bookInfos = res.data
       console.log(bookInfos)
       that.setData({
-        bookInfos: bookInfos
+        bookInfos: bookInfos,
+        loading: false
       })
       for (var i in bookInfos) {
         const j = i
@@ -106,7 +164,7 @@ Page({
               ['bookInfos[' + j + '].isbn']: bookInfos[j].isbn
             })
             api.doubanBook(bookInfos[j].isbn, res => {
-              if (res.data) {
+              if (res && res.data) {
                 bookInfos[j].douban = res.data
                 if (!bookInfos[j].douban.summary) {
                   bookInfos[j].douban.summary = '暂无简介'
@@ -128,15 +186,6 @@ Page({
             })
           }
         })
-        api.lentInfo(bookInfos[i].marc_no, res => {
-          bookInfos[j].lentInfo = res.data
-          for (var k = 0; k < bookInfos[j].lentInfo.length; ++k) {
-            bookInfos[j].lentInfo[k].status = bookInfos[j].lentInfo[k].status.split('：')
-          }
-          that.setData({
-            ['bookInfos[' + j + '].lentInfo']: bookInfos[j].lentInfo
-          })
-        })
       }
     })
   },
@@ -150,7 +199,10 @@ Page({
   },
   wxSearchBlur: function (e) {
     var that = this
-    WxSearch.wxSearchBlur(e, that);
+    // WxSearch.wxSearchBlur(e, that);
+    that.setData({
+      ['wxSearchData.view.isShow']: false
+    })
   },
   wxSearchKeyTap: function (e) {
     var that = this

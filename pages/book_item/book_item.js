@@ -14,11 +14,21 @@ Page({
    */
   onLoad: function (options) {
     var that = this
+    const api = require('../../utils/api.js')
     console.log(options.item)
     var bookInfo = JSON.parse(options.item)
     console.log(bookInfo)
     this.setData({
       bookInfo: bookInfo
+    })
+    api.lentInfo(bookInfo.marc_no, res => {
+      bookInfo.lentInfo = res.data
+      for (var k = 0; k < bookInfo.lentInfo.length; ++k) {
+        bookInfo.lentInfo[k].status = bookInfo.lentInfo[k].status.split('：')
+      }
+      that.setData({
+        ['bookInfo.lentInfo']: bookInfo.lentInfo
+      })
     })
   },
 

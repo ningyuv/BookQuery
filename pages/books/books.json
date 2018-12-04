@@ -2,8 +2,13 @@
   "usingComponents": {
     "i-card": "../../dist_iview/card/index",
     "van-card": "../../dist_vant/card/index",
+    "i-spin": "../../dist_iview/spin/index",
     "i-panel": "../../dist_iview/panel/index",
     "i-row": "../../dist_iview/row/index",
-    "i-col": "../../dist_iview/col/index"
+    "i-col": "../../dist_iview/col/index",
+    "i-grid": "../../dist_iview/grid/index",
+    "i-grid-item": "../../dist_iview/grid-item/index",
+    "i-icon": "../../dist_iview/icon/index",
+    "i-switch": "../../dist_iview/switch/index"
   }
 }

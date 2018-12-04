@@ -1,22 +1,54 @@
 <!--pages/books/books.wxml-->
-<text>pages/books/books.wxml</text>
 <import src="/wxSearch/wxSearch.wxml"/>
 
-<view class="wxSearch-section">
+<!-- <view class="wxSearch-section">
   <view class="wxSearch-pancel">
-    <input bindinput="wxSearchInput" bindfocus="wxSerchFocus" value="{{wxSearchData.value}}" bindblur="wxSearchBlur" class="wxSearch-input" placeholder="" />
-    <button class="wxSearch-button" bindtap="wxSearchFn" size="mini" plain="true">搜索</button>
+    <input bindinput="wxSearchInput" bindfocus="wxSerchFocus" value="{{wxSearchData.value}}" bindblur="wxSearchBlur" class="wxSearch-input" placeholder="输入搜索内容" style='height: 64rpx' />
+    <button class="wxSearch-button" bindtap="{{loading?'':'wxSearchFn'}}" size="mini" plain="true">搜索</button>
+  </view>
+</view> -->
+<!-- <view class="bar">
+  <view class='serach-form'>
+    <text class="iconfont icon-search"></text>
+    <input bindinput="wxSearchInput" bindfocus="wxSerchFocus" value="{{wxSearchData.value}}" bindblur="wxSearchBlur" type="text" class="search-input sub" placeholder="搜索书籍" confirm-type="search" />
+  </view>
+  <button class='success btn sm mr-sm' bindtap="{{loading?'':'wxSearchFn'}}">搜索
+  </button>
+</view> -->
+<view class="bar">
+  <view class='ml-sm'></view>
+  <view class='serach-round'>
+    <text class="iconfont icon-search"></text>
+    <input bindconfirm="wxSearchFn" bindinput="wxSearchInput" bindfocus="wxSerchFocus" value="{{wxSearchData.value}}" bindblur="wxSearchBlur" placeholder="搜索书籍"></input>
+  </view>
+  <view class='mh-sm text-sm' bindtap="{{loading?'':'wxSearchFn'}}">搜索
   </view>
 </view>
 
+    <view class="loader loader-17" style='display: {{loading?"flex":"none"}}'>
+      <view class="css-square square1"></view>
+      <view class="css-square square2"></view>
+      <view class="css-square square3"></view>
+      <view class="css-square square4"></view>
+      <view class="css-square square5"></view>
+      <view class="css-square square6"></view>
+      <view class="css-square square7"></view>
+      <view class="css-square square8"></view>
+    </view>
+<!-- <view style='display: {{loading?"flex":"none"}};flex-direction: row;justify-content: center;'>
+    <i-spin custom>
+      <i-icon type="refresh" size="20" i-class="icon-load"></i-icon>
+      <view>Loading</view>
+    </i-spin>
+</view> -->
 <view>
   <scroll-view>
     <block wx:for="{{bookInfos}}">
     <block wx:if="{{item.findCode}}">
-      <view class="flex pl-xs pr-xs flex-direction text-center" data-bookinfo="{{item}}" bindtap='tapBook'>
-        <view class='doc-box m-xs shadow'>
+      <view class="flex pl-xs pr-xs flex-direction text-center animation-slide-bottom" data-bookinfo="{{item}}" bindtap='tapBook' style='animation-delay: {{(index+1)*0.1}}s;'>
+        <view class='doc-box-mine m-xs shadow'>
           <view class='flex'>
-            <view class='flex-sub doc-box m-xs'>
+            <view class='flex-sub doc-box-mine m-xs'>
               <image src='{{item.douban.images.small}}' class='radius mr-df'></image>
             </view>
             <view class='flex-twice book-info p-sm m-xs'>
@@ -31,7 +63,11 @@
       </view>
     </block>
     </block>
+    <block wx:if="{{!bookInfos}}">
+      <view class="flex p-xs mt-xs pb-lg flex-direction text-center">
+        <view class='doc-box-mine p-sm m-xs shadow'>暂时找不到相关书籍</view>
+      </view>
+    </block>
   </scroll-view>
 </view>
-
 <template is="wxSearch" data="{{wxSearchData}}"/>

@@ -1,5 +1,6 @@
 //index.js
 //获取应用实例
+var WxSearch = require('../../wxSearch/wxSearch.js')
 const app = getApp()
 
 Page({
@@ -16,6 +17,11 @@ Page({
     })
   },
   onLoad: function () {
+
+    var that = this
+    //初始化的时候渲染wxSearchdata
+    WxSearch.init(that, 305, []);
+    WxSearch.initMindKeys([]);
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -52,5 +58,46 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+  wxSearchFn:function (e) {
+    var that = this
+    console.log(that.data.wxSearchData.value)
+    wx.navigateTo({
+      url: '../books/books?title=' + that.data.wxSearchData.value,
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
+  },
+  wxSearchInput: function (e) {
+    var that = this
+    WxSearch.wxSearchInput(e, that);
+  },
+  wxSerchFocus: function (e) {
+    var that = this
+    WxSearch.wxSearchFocus(e, that);
+  },
+  wxSearchBlur: function (e) {
+    var that = this
+    // WxSearch.wxSearchBlur(e, that);
+    that.setData({
+      ['wxSearchData.view.isShow']: false
+    })
+  },
+  wxSearchKeyTap: function (e) {
+    var that = this
+    WxSearch.wxSearchKeyTap(e, that);
+  },
+  wxSearchDeleteKey: function (e) {
+    var that = this
+    WxSearch.wxSearchDeleteKey(e, that);
+  },
+  wxSearchDeleteAll: function (e) {
+    var that = this;
+    WxSearch.wxSearchDeleteAll(that);
+  },
+  wxSearchTap: function (e) {
+    var that = this
+    WxSearch.wxSearchHiddenPancel(that);
   }
 })
