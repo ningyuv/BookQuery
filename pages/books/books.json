@@ -9,6 +9,7 @@
     "i-grid": "../../dist_iview/grid/index",
     "i-grid-item": "../../dist_iview/grid-item/index",
     "i-icon": "../../dist_iview/icon/index",
-    "i-switch": "../../dist_iview/switch/index"
+    "i-switch": "../../dist_iview/switch/index",
+    "i-load-more": "../../dist_iview/load-more/index"
   }
 }

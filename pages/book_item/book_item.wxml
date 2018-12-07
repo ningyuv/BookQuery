@@ -51,8 +51,13 @@
             <view class='basis-xs'>{{item.status[1]}}应还</view>
           </block>
           <block wx:else>
-            <view class='basis-xs'>可借</view>
+            <view class='basis-xs'>{{item.status[0]}}</view>
           </block>
+        </view>
+        </block>
+        <block wx:if="{{!bookInfo.lentInfo.length}}">
+        <view class="flex doc-box flex-wrap align-center" style='width: 180%;'>
+          <view class='basis-xs'>暂时没有馆藏信息</view>
         </view>
         </block>
         </scroll-view>

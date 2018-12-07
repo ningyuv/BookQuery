@@ -12,6 +12,6 @@
     "navigationBarTextStyle": "black"
   },
   "networkTimeout": {
-    "request": 3000
+    "request": 5000
   }
 }

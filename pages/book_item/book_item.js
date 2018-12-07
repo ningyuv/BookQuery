@@ -21,7 +21,7 @@ Page({
     this.setData({
       bookInfo: bookInfo
     })
-    api.lentInfo(bookInfo.marc_no, res => {
+    api.lentInfo(bookInfo.marcRecNo, res => {
       bookInfo.lentInfo = res.data
       for (var k = 0; k < bookInfo.lentInfo.length; ++k) {
         bookInfo.lentInfo[k].status = bookInfo.lentInfo[k].status.split('：')

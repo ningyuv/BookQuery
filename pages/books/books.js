@@ -9,7 +9,11 @@ Page({
    */
   data: {
     bookInfos: [],
-    loading: false
+    pageCount: 1,
+    haveNextPage: false,
+    lastLength: 0,
+    loadingTop: false,
+    loadingBottom: false
 
   },
 
@@ -24,61 +28,12 @@ Page({
     WxSearch.init(that, 45, []);
     WxSearch.initMindKeys([]);
 
-    WxSearch.wxSearchAddHisKey(that);
-    console.log(options.title)
-    if(options.title == "undefined"){
-      options.title = ''
-      console.log(options.title)
-    }
-    const api = require('../../utils/api.js')
-    const parser = require('../../utils/parser.js')
     this.setData({
-      loading: true,
-      bookInfos: [],
-      ['wxSearchData.value']: options.title
+      haveNextPage: true,
+      loadingTop: true
     })
-    api.simpleSearch(options.title, res => {
-      var bookInfos = res.data
-      console.log(bookInfos)
-      that.setData({
-        bookInfos: bookInfos,
-        loading: false
-      })
-      for (var i in bookInfos) {
-        const j = i
-        api.detailPage(bookInfos[i].marc_no, res => {
-          bookInfos[j].isbn = res.data
-          if (bookInfos[j].isbn) {
-            that.setData({
-              ['bookInfos[' + j + '].isbn']: bookInfos[j].isbn
-            })
-            api.doubanBook(bookInfos[j].isbn, res => {
-              if (res && res.data) {
-                bookInfos[j].douban = res.data
-                if (!bookInfos[j].douban.summary) {
-                  bookInfos[j].douban.summary = '暂无简介'
-                }
-              }
-              else {
-                bookInfos[j].douban = {
-                  "images": {
-                    "small": "../../images/book-default-lpic.gif",
-                    "large": "../../images/book-default-lpic.gif",
-                    "medium": "../../images/book-default-lpic.gif"
-                  },
-                  "summary": "暂无简介"
-                }
-              }
-              that.setData({
-                ['bookInfos[' + j + '].douban']: bookInfos[j].douban
-              })
-            })
-          }
-        })
-      }
-    })
-
-
+    this.data.wxSearchData.value = options.title
+    this.universalSearchMethod([],1)
   },
 
   /**
@@ -120,7 +75,12 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    if(this.data.haveNextPage){
+      this.universalSearchMethod(this.data.bookInfos, this.data.pageCount + 1)
+      this.setData({
+        loadingBottom: true
+      })
+    }
   },
 
   /**
@@ -138,56 +98,68 @@ Page({
       url: '../book_item/book_item?item=' + itemStr,
     })
   },
-  wxSearchFn: function (e) {
+  universalSearchMethod: function (baseBookInfos, pageCount) {
+    console.log(this.data.bookInfos, pageCount)
     var that = this
     WxSearch.wxSearchAddHisKey(that);
     console.log(this.data.wxSearchData)
     const api = require('../../utils/api.js')
-    const parser = require('../../utils/parser.js')
     this.setData({
-      loading: true,
-      bookInfos: []
+      pageCount: pageCount,
+      lastLength: baseBookInfos.length
     })
-    api.simpleSearch(this.data.wxSearchData.value, res => {
-      var bookInfos = res.data
-      console.log(bookInfos)
+    var bookInfos = baseBookInfos
+    api.advSearch('any', this.data.wxSearchData.value, 'relevance', pageCount, res => {
+      var bookInfosPage = []
+      if (res.data.content) {
+        bookInfosPage = res.data.content
+      }
+      if(!res.data.total|| pageCount*20>res.data.total){
+        that.setData({
+          haveNextPage: false
+        })
+      }
+      console.log(res.data, bookInfos)
       that.setData({
-        bookInfos: bookInfos,
-        loading: false
+        bookInfos: bookInfos.concat(bookInfosPage),
+        loadingTop: false,
+        loadingBottom: false
       })
-      for (var i in bookInfos) {
+      for (var i = 0; i < bookInfosPage.length; ++i) {
         const j = i
-        api.detailPage(bookInfos[i].marc_no, res => {
-          bookInfos[j].isbn = res.data
-          if (bookInfos[j].isbn) {
-            that.setData({
-              ['bookInfos[' + j + '].isbn']: bookInfos[j].isbn
-            })
-            api.doubanBook(bookInfos[j].isbn, res => {
-              if (res && res.data) {
-                bookInfos[j].douban = res.data
-                if (!bookInfos[j].douban.summary) {
-                  bookInfos[j].douban.summary = '暂无简介'
-                }
-              }
-              else {
-                bookInfos[j].douban = {
-                  "images": {
-                    "small": "../../images/book-default-lpic.gif",
-                    "large": "../../images/book-default-lpic.gif",
-                    "medium": "../../images/book-default-lpic.gif"
-                  },
-                  "summary": "暂无简介"
-                }
-              }
-              that.setData({
-                ['bookInfos[' + j + '].douban']: bookInfos[j].douban
-              })
-            })
+        api.doubanBook(bookInfosPage[j].isbn, res => {
+          if (res && res.data) {
+            bookInfosPage[j].douban = res.data
+            if (!bookInfosPage[j].douban.summary) {
+              bookInfosPage[j].douban.summary = '暂无简介'
+            }
           }
+          else {
+            bookInfosPage[j].douban = {
+              "images": {
+                "small": "../../images/book-default-lpic.gif",
+                "large": "../../images/book-default-lpic.gif",
+                "medium": "../../images/book-default-lpic.gif"
+              },
+              "summary": "暂无简介"
+            }
+          }
+          console.log('bookInfos[' + parseInt(j + bookInfos.length) + '].douban')
+          that.setData({
+            ['bookInfos[' + parseInt(j + bookInfos.length) + '].douban']: bookInfosPage[j].douban
+          })
         })
       }
     })
+  },
+  wxSearchFn: function (e) {
+    var that = this
+    that.setData({
+      bookInfos: [],
+      haveNextPage: true,
+      loadingTop: true
+    })
+    that.universalSearchMethod([],1)
   },
   wxSearchInput: function (e) {
     var that = this
@@ -200,9 +172,9 @@ Page({
   wxSearchBlur: function (e) {
     var that = this
     // WxSearch.wxSearchBlur(e, that);
-    that.setData({
-      ['wxSearchData.view.isShow']: false
-    })
+    // that.setData({
+    //   ['wxSearchData.view.isShow']: false
+    // })
   },
   wxSearchKeyTap: function (e) {
     var that = this
