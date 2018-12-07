@@ -20,12 +20,10 @@ function advSearch(code, value, sortMethod, pageCount, fn){
   })
 }
 function doubanBook(isbn, fn){
-  const baseURL = 'https://stduoj.tk/bookAPI/douban'
+  const baseURL = 'https://douban.uieee.com/v2/book/isbn/'
   wx.request({
-    url: baseURL,
-    data: {
-      isbn: isbn
-    },
+    url: baseURL + isbn,
+    data: {},
     header: {
       'Content-Type': 'application/xml'
     },
@@ -33,7 +31,10 @@ function doubanBook(isbn, fn){
     dataType: 'json',
     responseType: 'text',
     success: function(res) {
-      fn(res)
+      if(res.statusCode === 200)
+        fn(res)
+      else
+        fn(null)
     },
     fail: function(res) {
       fn(null)

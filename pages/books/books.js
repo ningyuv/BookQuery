@@ -144,7 +144,7 @@ Page({
               "summary": "暂无简介"
             }
           }
-          console.log('bookInfos[' + parseInt(j + bookInfos.length) + '].douban')
+          console.log('bookInfos[' + parseInt(j + bookInfos.length) + '].douban', bookInfosPage[j].douban)
           that.setData({
             ['bookInfos[' + parseInt(j + bookInfos.length) + '].douban']: bookInfosPage[j].douban
           })
