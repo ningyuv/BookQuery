@@ -1,5 +1,5 @@
 function advSearch(code, value, sortMethod, pageCount, fn){
-  const baseURL = 'https://stduoj.tk/bookAPI/advSearch'
+  const baseURL = 'https://www.ngers.cn/bookAPI/advSearch'
   wx.request({
     url: baseURL,
     data: {
@@ -44,7 +44,7 @@ function doubanBook(isbn, fn){
   })
 }
 function simpleSearch(name, fn){
-  const baseURL = 'https://stduoj.tk/bookAPI/bookList'
+  const baseURL = 'https://www.ngers.cn/bookAPI/bookList'
   wx.request({
     url: baseURL,
     data: {
@@ -62,7 +62,7 @@ function simpleSearch(name, fn){
   })
 }
 function detailPage(marcRecNo, fn) {
-  const baseURL = 'https://stduoj.tk/bookAPI/isbn'
+  const baseURL = 'https://www.ngers.cn/bookAPI/isbn'
   wx.request({
     url: baseURL,
     data: {
@@ -81,7 +81,7 @@ function detailPage(marcRecNo, fn) {
 }
 function lentInfo(marcRecNo, fn) {
   wx.request({
-    url: 'https://stduoj.tk/bookAPI/lent',
+    url: 'https://www.ngers.cn/bookAPI/lent',
     data: {
       marc_no: marcRecNo
     },
