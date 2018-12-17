@@ -15,8 +15,9 @@ Page({
   onLoad: function (options) {
     var that = this
     const api = require('../../utils/api.js')
-    console.log(options.item)
-    var bookInfo = JSON.parse(options.item)
+    var item = options.item.replace(/#eq;/g, '=').replace(/#qm;/g, '?').replace(/#and;/g, '&')
+    console.log(item)
+    var bookInfo = JSON.parse(item)
     console.log(bookInfo)
     this.setData({
       bookInfo: bookInfo

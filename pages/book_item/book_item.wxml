@@ -22,6 +22,8 @@
                 <view>书名: {{bookInfo.title}}</view>
                 <view>ISBN: {{bookInfo.isbn}}</view>
                 <view>作者: {{bookInfo.author}}</view>
+                <view>出版日期: {{bookInfo.pubYear}}</view>
+                <view>出版社: {{bookInfo.publisher}}</view>
               </view>
             </view>
           </view>

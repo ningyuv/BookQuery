@@ -92,7 +92,7 @@ Page({
   tapBook: function (e) {
     console.log(e)
     var itemStr = JSON.stringify(e.currentTarget.dataset.bookinfo)
-    itemStr = itemStr.replace(/=/g, ':').replace(/\?/g, ':')
+    itemStr = itemStr.replace(/=/g, '#eq;').replace(/\?/g, '#qm;').replace(/&/g, '#and;')
     console.log('itemStr: '+itemStr)
     wx.navigateTo({
       url: '../book_item/book_item?item=' + itemStr,
